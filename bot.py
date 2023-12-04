@@ -15,7 +15,7 @@ bot = telebot.TeleBot(your_bot)
 
 @bot.message_handler(commands=['start'])
 def startBot(message):
-    first_mess = "Приветствую! Я - бот для обработки текстов. Для начала работы отправьте мне любой текст не длиннее 4 096 символов (ограничение Telegram)"
+    first_mess = "Приветствую! Я - бот для обработки текстов. Для начала работы отправьте мне любой текст сообщением."
     bot.send_message(message.chat.id, first_mess)
 
 
@@ -30,10 +30,8 @@ def handle_text(message):
     markup.add(button_dlina)
     button_obratno = types.InlineKeyboardButton(text = 'Обратить текст', callback_data='obratno')
     markup.add(button_obratno)
-    
     button_soyuz = types.InlineKeyboardButton(text = 'Наличие союза "И"', callback_data='soyuz')
     markup.add(button_soyuz)   
-    
     button_secret = types.InlineKeyboardButton(text = 'Секретная кнопка', callback_data='secret')
     markup.add(button_secret)
     bot.send_message(message.chat.id, "Принято! А теперь выберите действие.", reply_markup=markup)
@@ -51,8 +49,7 @@ def response(function_call):
         elif function_call.data == "soyuz":
             match = re.search(r'\b[Ии]\b', user_text)
             if match:
-                bot.send_message(function_call.message.chat.id, "В тексте есть союз 'И'.")
-                
+                bot.send_message(function_call.message.chat.id, "В тексте есть союз 'И'.")   
             else:
                 bot.send_message(function_call.message.chat.id, "В тексте нет союза 'И'.")
                         
